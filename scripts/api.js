@@ -7,7 +7,19 @@ const api=(function (){
       .then(res => res.json())
       .then(resJson => console.log(resJson));
   }
-  return {
+    function createItem (name) {
+      const newItem= JSON.stringify({ name: name })
+      return fetch(`${BASE_URL}/items`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: newItem,
+      })
+    }
+    return {
     getItems,
+    createItem,
   };
 })();
+
