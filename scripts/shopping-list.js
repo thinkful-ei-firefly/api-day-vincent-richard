@@ -108,8 +108,6 @@ const shoppingList = (function(){
           render();
         });
       store.findAndDelete(id);
-      // render the updated shopping list
-      render();
     });
   }
   
