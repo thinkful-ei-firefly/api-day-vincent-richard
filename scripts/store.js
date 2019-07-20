@@ -1,5 +1,7 @@
 'use strict';
+
 /* global Item */
+
 // eslint-disable-next-line no-unused-vars
 const store = (function(){
   const addItem = function(item) {
@@ -12,20 +14,25 @@ const store = (function(){
     }*/
   };
 
+  const findAndUpdate = function(id, newData) {
+    const item = this.findById(id);
+    return Object.assign(item, newData);
+  };
+
   const findById = function(id) {
     return this.items.find(item => item.id === id);
   };
 
-  const findAndToggleChecked = function(id) {
+  /*const findAndToggleChecked = function(id) {
     const item = this.findById(id);
     item.checked = !item.checked;
-  };
+  };*/
 
   const findAndDelete = function(id) {
     this.items = this.items.filter(item => item.id !== id);
   };
 
-  const findAndUpdateName = function(id, name) {
+  /*const findAndUpdateName = function(id, name) {
     try {
       Item.validateName(name);
       const item = this.findById(id);
@@ -33,7 +40,7 @@ const store = (function(){
     } catch(e) {
       console.log('Cannot update name: ' + e.message);
     }
-  };
+  };*/
 
   const toggleCheckedFilter = function() {
     this.hideCheckedItems = !this.hideCheckedItems;
@@ -55,12 +62,13 @@ const store = (function(){
 
     addItem,
     findById,
-    findAndToggleChecked,
+    //findAndToggleChecked,
     findAndDelete,
-    findAndUpdateName,
+    //findAndUpdateName,
     toggleCheckedFilter,
     setSearchTerm,
     setItemIsEditing,
+    findAndUpdate,
   };
   
 }());

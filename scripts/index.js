@@ -8,13 +8,10 @@ $(document).ready(function() {
   shoppingList.render();
 });
 
-store.items.push(Item.create('apples'));
 
 
-//test items below
-api.getItems()
+//test stuff
+
+fetch('https://thinkful-list-api.herokuapp.com/ei-student/items')
   .then(res => res.json())
-  .then((items) => {
-    items.forEach((item) => store.addItem(item));
-    shoppingList.render();
-  });
+  .then(data => console.log(data));

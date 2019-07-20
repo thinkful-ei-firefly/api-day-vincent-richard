@@ -1,5 +1,5 @@
 'use strict';
-/* global store, $ */
+/* global store, $, api */
 
 // eslint-disable-next-line no-unused-vars
 const shoppingList = (function(){
@@ -87,8 +87,13 @@ const shoppingList = (function(){
   function handleItemCheckClicked() {
     $('.js-shopping-list').on('click', '.js-item-toggle', event => {
       const id = getItemIdFromElement(event.currentTarget);
-      store.findAndToggleChecked(id);
-      render();
+      api.updateItem(id, {checked: !store.findById(id).checked})
+        .then(() => {
+          store.findAndUpdate(id, {checked: !store.findById(id).checked});
+          render();
+        });
+      //store.findAndToggleChecked(id);
+      //render();
     });
   }
   
@@ -98,6 +103,10 @@ const shoppingList = (function(){
       // get the index of the item in store.items
       const id = getItemIdFromElement(event.currentTarget);
       // delete the item
+      api.deleteItem(id)
+        .then(() => {
+          render();
+        });
       store.findAndDelete(id);
       // render the updated shopping list
       render();
@@ -109,9 +118,12 @@ const shoppingList = (function(){
       event.preventDefault();
       const id = getItemIdFromElement(event.currentTarget);
       const itemName = $(event.currentTarget).find('.shopping-item').val();
-      store.findAndUpdateName(id, itemName);
+      api.updateItem(id, {name: itemName})
+        .then(() => {
+          store.findAndUpdate(id, {name: itemName});
+          render();
+        });
       store.setItemIsEditing(id, false);
-      render();
     });
   }
   
